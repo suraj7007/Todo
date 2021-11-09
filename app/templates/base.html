@@ -38,14 +38,17 @@
                         <a class="nav-link {% block signupactive %}{% endblock signupactive %}"
                             href="{% url 'signup' %}">Signup</a>
                     </li>
-
-
+                    <li class="nav-item pull-rght">
+                        <a class="nav-link {% block logoutactive %}{% endblock logoutactive %}"
+                            href="{% url 'logout' %}">Logout</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     {% block body %} {% endblock body %}
+
     <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'bootstrap.bundle.min.js.map' %}"></script>
     {% block js %}{% endblock js %}
