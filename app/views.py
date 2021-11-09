@@ -10,13 +10,11 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='login')
 def home(request):
-    print(f"user : {request.user}")
     messages.success(request, 'Logged in successfully')
     return render(request, "home.html")
 
 
 def loginuser(request):
-    print(f"user : {request.user}")
     if request.method == "POST":
         uname = request.POST["username"]
         pwd = request.POST["password"]
