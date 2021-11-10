@@ -30,6 +30,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% block logoutactive %}{% endblock logoutactive %}"
+                            href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link {% block loginactive %}{% endblock loginactive %}"
                             href="{% url 'login' %}">Login</a>
@@ -38,10 +44,7 @@
                         <a class="nav-link {% block signupactive %}{% endblock signupactive %}"
                             href="{% url 'signup' %}">Signup</a>
                     </li>
-                    <li class="nav-item pull-rght">
-                        <a class="nav-link {% block logoutactive %}{% endblock logoutactive %}"
-                            href="{% url 'logout' %}">Logout</a>
-                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -51,7 +54,13 @@
 
     <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'bootstrap.bundle.min.js.map' %}"></script>
-    {% block js %}{% endblock js %}
+    {% block js %}
+    <style>
+        .navbar-nav {
+            margin-left: auto;
+        }
+    </style>
+    {% endblock js %}
 </body>
 
 </html>

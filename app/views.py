@@ -1,17 +1,39 @@
+from django import forms
 from django.contrib.auth.password_validation import password_changed
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .models import TODO
+from .forms import Todoform
 
 # Create your views here.
 
 
 @login_required(login_url='login')
 def home(request):
+    print(request.user)
     messages.success(request, 'Logged in successfully')
-    return render(request, "home.html")
+    form = Todoform()
+    todo_obj = TODO.objects.filter(user=request.user)
+    context = {"form":form, "todo":todo_obj}
+    return render(request, "home.html", context)
+
+
+@login_required(login_url="login")
+def addtodo(request):
+    if request.method == "POST":
+        form = Todoform(request.POST)
+        todo = form.save(commit=False)
+        todo.user = request.user
+        todo.save()
+        return redirect("/")
+    else:
+        form = Todoform()
+        messages.error(request, "Invalid Info")
+        context = {"form":form}
+        return redirect("/")
 
 
 def loginuser(request):
